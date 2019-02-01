@@ -1,0 +1,21 @@
+*** util/env_posix.cc.orig	2019-01-30 16:41:03.000000000 -0600
+--- util/env_posix.cc   	2019-01-30 16:42:16.000000000 -0600
+***************
+*** 27,32 ****
+--- 27,42 ----
+  #include "util/posix_logger.h"
+  #include "util/env_posix_test_helper.h"
+  
++ 
++ //#if defined(OS_MACOSX) || defined(OS_SOLARIS) || defined(OS_FREEBSD) ||\
++ //    defined(OS_NETBSD) || defined(OS_OPENBSD) || defined(OS_DRAGONFLYBSD) ||\
++ //    defined(OS_ANDROID)
++ // Use fread/fwrite/fflush on platforms without _unlocked variants
++ #define fread_unlocked fread
++ #define fwrite_unlocked fwrite
++ #define fflush_unlocked fflush
++ //#endif
++ 
+  namespace leveldb {
+  
+  namespace {

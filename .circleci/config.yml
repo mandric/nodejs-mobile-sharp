@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/buildpack-deps
+
+    working_directory: ~/repo
+
+    shell: /bin/bash -o errexit -o pipefail
+
+    environment:
+      TERM: dumb
+      JVM_OPTS: -Xmx3200m
+      #GRADLE_OPTS: -Xmx1024m
+
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: |
+          docker build \
+            --build-arg ndk_version=android-ndk-r18b \
+            -t "digidem/android-nodejs:testing" \
+            .
+      - run: |
+          # mounting volumes on docker containers is not allowed, clone source again.
+          # https://circleci.com/docs/2.0/building-docker-images/#mounting-folders
+          REPO='https://github.com/mandric/nodejs-mobile-sharp.git'
+          docker run \
+            --name="builder" digidem/android-nodejs:testing \
+            bash -c "cd && git clone --depth=1 $REPO src && cd src && make"
+      - run: |
+          mkdir build
+          docker cp builder:/home/circleci/src/android/app/build/outputs/apk build/apks
+          # include build number in apk filename
+          find build -name \*.apk | \
+            sed "p;s/\.apk/-$CIRCLE_BUILD_NUM.apk/" | \
+              xargs -n2 mv
+      - store_artifacts:
+          path: build/apks/
+          destination: apks/

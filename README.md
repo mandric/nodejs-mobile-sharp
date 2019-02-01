@@ -1,5 +1,7 @@
 # React Native Use Native Modules Sample
 
+[![CircleCI](https://circleci.com/gh/mandric/nodejs-mobile-sharp.svg?style=svg)](https://circleci.com/gh/mandric/nodejs-mobile-sharp)
+
 A React Native project that uses the [Node.js for Mobile Apps React Native plugin]( https://github.com/janeasystems/nodejs-mobile-react-native) plugin to showcase building and running native modules.
 
 In this sample, the Node.js engine runs in a background thread inside the app, executing sample code from the [sha3](https://www.npmjs.com/package/sha3) and [sqlite3](https://www.npmjs.com/package/sqlite3) native modules. The results are shown in the app UI.
@@ -146,6 +148,7 @@ rn_bridge.channel.send("Node was initialized. Versions: " + JSON.stringify(proce
 The React Native interface takes care of querying Node.js for each module by the means of distinct UI buttons and showing the results in the UI.
 
 App.js contents:
+
 ```js
 ...
 import nodejs from 'nodejs-mobile-react-native';
@@ -196,3 +199,7 @@ export default class App extends Component<Props> {
 }
 ...
 ```
+
+## Testing
+
+[![Browserstack](browserstack-logo-600x315.png)](http://browserstack.com/)

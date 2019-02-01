@@ -1,5 +1,4 @@
 #!/bin/bash
-      # Helper script for Gradle to call npm on macOS in case it is not found
-      export PATH=$PATH:/Users/gregor/.nvm/versions/node/v8.11.1/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/gregor/Dev/DdDev/nodejs-mobile-samples/react-native/UseNativeModules/node_modules/nodejs-mobile-react-native/node_modules/.bin:/Users/gregor/Dev/DdDev/nodejs-mobile-samples/react-native/UseNativeModules/node_modules/.bin:/usr/local/opt/gdal2/bin:/usr/local/bin/google-cloud-sdk/bin:/Users/gregor/.rvm/gems/ruby-2.2.1/bin:/Users/gregor/.rvm/gems/ruby-2.2.1@global/bin:/Users/gregor/.rvm/rubies/ruby-2.2.1/bin:/Users/gregor/.nvm/versions/node/v8.11.1/bin:~/Library/Android/sdk/tools:~/Library/Android/sdk/platform-tools:/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:~/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/gregor/go/bin:/usr/local/opt/go/libexec/bin:/Users/gregor/.rvm/bin
-      npm $@
-    
+# Helper script for Gradle to call node on macOS in case it is not found
+echo PATH="$(test -n $NVM_DIR && dirname $(nvm which current)):$PATH"
+npm $@
